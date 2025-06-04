@@ -12,7 +12,7 @@ using MyPortfolioWebApp.Models;
 namespace MyPortfolioWebApp.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250604010155_AddNewsToDatabase")]
+    [Migration("20250529061834_AddNewsToDatabase")]
     partial class AddNewsToDatabase
     {
         /// <inheritdoc />
@@ -48,6 +48,7 @@ namespace MyPortfolioWebApp.Migrations
                         .HasColumnType("longtext");
 
                     b.Property<string>("Writer")
+                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.HasKey("Id");

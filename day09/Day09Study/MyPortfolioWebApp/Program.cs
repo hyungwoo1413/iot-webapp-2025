@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using MyPortfolioWebApp.Models;
 
@@ -11,11 +12,16 @@ namespace MyPortfolioWebApp
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
-            // DB���� �ʱ�ȭ
+            // DB연결 초기화
             builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseMySql(
                 builder.Configuration.GetConnectionString("SmartHomeConnection"),
                 ServerVersion.AutoDetect(builder.Configuration.GetConnectionString("SmartHomeConnection"))
             ));
+
+            // ASP.NET Core Identity 설정
+            builder.Services.AddIdentity<IdentityUser, IdentityRole>()
+                .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddDefaultTokenProviders();
 
             var app = builder.Build();
 
@@ -27,8 +33,8 @@ namespace MyPortfolioWebApp
             app.UseStaticFiles();
 
             app.UseRouting();
-
-            app.UseAuthorization();
+            app.UseAuthentication();    // ASP.NET Core Identity 계정
+            app.UseAuthorization();     // 권한
 
             app.MapControllerRoute(
                 name: "default",
