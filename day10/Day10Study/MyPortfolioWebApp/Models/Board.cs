@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace MyPortfolioWebApp.Models;
 
-public class Board
+public partial class Board
 {
     [Key]
     public int Id { get; set; }
