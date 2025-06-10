@@ -1,11 +1,17 @@
-﻿@model IEnumerable<MyPortfolioWebApp.Models.Board>
+﻿@inject SignInManager<CustomUser> SignInManager
+@inject UserManager<CustomUser> UserManager
+
+@using System.Text.RegularExpressions
+@model IEnumerable<MyPortfolioWebApp.Models.Board>
 
 @{
     ViewData["Title"] = "Index";
     // 페이징, 검색 등 필요한 ViewBag 값이 있다면 아래처럼 선언
-    // var page = ViewBag.Page;
-    // var totalPage = ViewBag.TotalPage;
-    // var search = ViewBag.Search;
+    var startPage = ViewBag.StartPage;
+    var endPage = ViewBag.EndPage;
+    var page = ViewBag.Page;
+    var totalPage = ViewBag.TotalPage;
+    var search = ViewBag.Search;
 }
 
 <section id="board" class="section">
@@ -17,7 +23,10 @@
     <div class="container" data-aos="fade-up" data-aos-delay="100">
         <div class="row justify-content-between mb-2">
             <div class="col-3">
-                <a asp-action="Create" class="btn btn-sm btn-success btn-kelly">Create</a>
+                @if (SignInManager.IsSignedIn(User))
+                {
+                    <a asp-controller="Board" asp-action="Create" class="btn btn-sm btn-success btn-kelly">Create</a>
+                }
             </div>
             <div class="col-6">
                 @* 검색 폼이 필요하다면 아래 주석 해제
@@ -46,19 +55,66 @@
                 @foreach (var item in Model)
                 {
                     <tr>
-                        <td>@Html.DisplayFor(modelItem => item.Email)</td>
-                        <td>@Html.DisplayFor(modelItem => item.Writer)</td>
+                        <td class="content-center">@Html.DisplayFor(modelItem => item.Email)</td>
+                        <td class="content-center">@Html.DisplayFor(modelItem => item.Writer)</td>
                         <td>
                             <a asp-action="Details" asp-route-id="@item.Id">@Html.DisplayFor(modelItem => item.Title)</a>
                         </td>
-                        <td>@Html.DisplayFor(modelItem => item.Contents)</td>
-                        <td>@Html.DisplayFor(modelItem => item.PostDate)</td>
-                        <td>@Html.DisplayFor(modelItem => item.ReadCount)</td>
                         <td>
-                            <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-warning">Edit</a>
-                            <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-danger">Delete</a>
+                            <a asp-action="Details" asp-route-id="@item.Id">
+                                @Html.Raw(Regex.Replace(item.Contents, "<.*?>", ""))
+                            </a>
+                        </td>
+                        <td class="content-center">@Html.DisplayFor(modelItem => item.PostDate)</td>
+                        <td class="content-center">@Html.DisplayFor(modelItem => item.ReadCount)</td>
+                        <td class="input-group input-group-sm justify-content-end"></td>
+                        <td>
+                            @if (SignInManager.IsSignedIn(User))
+                            {
+                                <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-warning">Edit</a>
+                                <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-danger">Delete</a>
+                            }
                         </td>
                     </tr>
                 }
+            </table>
+
+        <div class="text-center mt-3">
+            <div class="in">
+                <ul class="pagination pagination-sm justify-content-center">
+                    @if (page > 1) // 첫페이지 버튼
+                    {
+                        <li class="page-item"><a href="?page=1&search=@search" class="page-link">≪</a></li>
+                    }
+
+                    @if (page > 1) // 이전페이지 버튼
+                    {
+                        <li class="page-item"><a href="?page=@(page-1)&search=@search" class="page-link">＜</a></li>
+                    }
+
+                    @for (var pcount = startPage; pcount <= endPage; pcount++)
+                    {
+                        if (pcount == page)
+                        {
+                            <li class="page-item"><a href="?page=@pcount&search=@search" class="page-link active">@pcount</a></li>
+                        }
+                        else
+                        {
+                            <li class="page-item"><a href="?page=@pcount&search=@search" class="page-link">@pcount</a></li>
+                        }
+                    }
+
+                    @if (page < totalPage) // 다음페이지
+                    {
+                        <li class="page-item"><a href="?page=@(page + 1)&search=@search" class="page-link">＞</a></li>
+                    }
+
+                    @if (page != totalPage) // 마지막 페이지
+                    {
+                        <li class="page-item"><a href="?page=@totalPage&search=@search" class="page-link">≫</a></li>
+                    }
+                </ul>
+            </div>
+        </div>
     </div>
 </section>
