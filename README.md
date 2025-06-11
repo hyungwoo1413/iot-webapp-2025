@@ -1051,7 +1051,17 @@
 ### ASP.NET Core API서버(계속)
 
 #### WebAPI 서버 + 웹사이트
-
+- WebAPI 서버는 12일차 프로젝트 사용
+- 웹사이트만 새로 생성
+    1. ASP.NET Core 비어있음으로 프로젝트 생성
+    2. wwwroot/html/index.html - VS.Code의 Live Server 예제와 동일(정적페이지)
+    3. Program.cs에서 MVC패턴 관련된 로직 추가
+    4. Controllers/HomeController.cs 생성
+    5. Index() 메서드에서 뷰 추가 - ASP.NET Core 동적페이지
+    6. Views 폴더 하위 파일들이 필요
+        - _ViewImports.cshtml
+        - _ViewStart.cshtml
+        - Shared/_Layout.cshtml.css
 
 ### AWS 클라우드 업로드
 
