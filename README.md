@@ -1068,11 +1068,57 @@
 - AJAX : Asyncronous Javascript And Xml. 자바스크립트에서 비동기로 메서드를 호출하는 기술
     - 예전에 XML로만 데이터 전달. 현재는 Json으로 이전 중
 
-- CORS Policy Block : Cross-Origin Resource Sharing. 다른 출처 리소스 접근허용 보안 메커니즘
+- CORS Policy : Cross-Origin Resource Sharing. 다른 출처 리소스 접근허용 보안 메커니즘
     - 아무나 URL로 호출을 못하도록 웹페이지 보안설정
     - WebAPI 서비스 Program.cs에 CORS 호출권한 설정 추가
     - 프론트엔드는 CORS 설정 필요없음
     
+    <img src="./image/web0033.png" width="600">
+
+## 14일차
+
+### ASP.NET Core API서버
+
+#### WebAPI 서버 + 웹사이트
+- 할 일 수정/삭제
+- 실행화면
+
+    <img src="./image/web0034.png" width="600">
+
+- 결론
+    - WebAPI로 백엔드를 운영하면 프론트는 윈앱, 웹앱, 모바일앱 모두 사용 가능
 
 ### AWS 클라우드 업로드
+- 클라우드서비스 사용 : 어디서나 웹사이트 공개
+- 온프레미스 : 직접 서버를 구축. DB서버구축, 웹서버구축 등 직접 운영
+    - 서버 하드웨어 구매, 서버실 구축, UPS구성, 네트워크 스위치구성
+    - OS구매, SW구매, 운영환경 구성, 개발환경 구성
+    - 문제해결, 유지보수
+- 클라우드 : 서버구축 필요없음. DB서버 신청, 생성
+    - 서버실 구축X, 하드웨어 구매X, SW 구매X, 운영관리X
+    - 사용료가 저렴하지 않음
 
+- AWS 라이트세일 - https://aws.amazon.com/ko/lightsail/
+    - 기존 AWS보다 저렴하게 사용할 수 있는 서비스
+
+#### AWS 라이트세일에 웹서버 올리기
+1. 인스턴스 생성
+    1. Microsoft Windows > Windows Server 2019
+    2. 네트워크 듀얼스택
+    3. 크기, 월별 $9.5 선택 `90일 무료`
+    4. 인스턴스 이름
+    5. 인스턴스 생성
+2. 인스턴스 관리 > RDP를 사용하여 연결
+    1. 초기화 대기(네트워크 나올때까지, 1분가량)
+    2. Network2 허용 Yes 클릭
+    3. Server Manager 복사
+        - Configure this local server
+        - IE Enhanced Security Config : ON(웹사이트 )
+
+### 부가적인 기능
+- OAuth (구글 로그인)
+- 파일업로드
+
+### MyPortfolio 완성
+
+## 15일차

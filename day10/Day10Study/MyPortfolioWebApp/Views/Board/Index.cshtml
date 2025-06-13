@@ -45,36 +45,58 @@
                     <th>@Html.DisplayNameFor(model => model.Email)</th>
                     <th>@Html.DisplayNameFor(model => model.Writer)</th>
                     <th>@Html.DisplayNameFor(model => model.Title)</th>
-                    <th>@Html.DisplayNameFor(model => model.Contents)</th>
+                    @* <th>@Html.DisplayNameFor(model => model.Contents)</th> *@
                     <th>@Html.DisplayNameFor(model => model.PostDate)</th>
                     <th>@Html.DisplayNameFor(model => model.ReadCount)</th>
-                    <th></th>
+                    @if (SignInManager.IsSignedIn(User))
+                    {
+                        <th>관리</th>
+                    }
                 </tr>
             </thead>
             <tbody>
                 @foreach (var item in Model)
                 {
-                    <tr>
-                        <td class="content-center">@Html.DisplayFor(modelItem => item.Email)</td>
-                        <td class="content-center">@Html.DisplayFor(modelItem => item.Writer)</td>
-                        <td>
-                            <a asp-action="Details" asp-route-id="@item.Id">@Html.DisplayFor(modelItem => item.Title)</a>
+                    <tr class="clickable-row" onclick="location.href='@Url.Action("Details", "Board", new { id = item.Id })'">
+                        <!-- Email -->
+                        <td class="text-start"
+                            style="width:200px; max-width:200px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">
+                            @Html.DisplayFor(modelItem => item.Email)
                         </td>
-                        <td>
-                            <a asp-action="Details" asp-route-id="@item.Id">
-                                @Html.Raw(Regex.Replace(item.Contents, "<.*?>", ""))
-                            </a>
+
+                        <!-- Writer -->
+                        <td class="content-center">
+                            @Html.DisplayFor(modelItem => item.Writer)
                         </td>
-                        <td class="content-center">@Html.DisplayFor(modelItem => item.PostDate)</td>
-                        <td class="content-center">@Html.DisplayFor(modelItem => item.ReadCount)</td>
-                        <td class="input-group input-group-sm justify-content-end"></td>
-                        <td>
-                            @if (SignInManager.IsSignedIn(User))
-                            {
-                                <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-warning">Edit</a>
-                                <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-danger">Delete</a>
-                            }
+
+                        <!-- Title -->
+                        <td style="width:200px; max-width:200px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">
+                            @Html.DisplayFor(modelItem => item.Title)
                         </td>
+
+                        <!-- Contents -->
+                        @* <td style="width:200px; max-width:200px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">
+                            @Html.Raw(Regex.Replace(item.Contents, "<.*?>", ""))
+                        </td> *@
+
+                        <!-- PostDate -->
+                        <td class="content-center">
+                            @Html.DisplayFor(modelItem => item.PostDate)
+                        </td>
+
+                        <!-- ReadCount -->
+                        <td class="content-center">
+                            @Html.DisplayFor(modelItem => item.ReadCount)
+                        </td>
+
+                        <!-- 관리 -->
+                        @if (SignInManager.IsSignedIn(User))
+                        {
+                        <td class="text-end">
+                            <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-warning">Edit</a>
+                            <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-danger">Delete</a>
+                        </td>
+                        }
                     </tr>
                 }
             </table>

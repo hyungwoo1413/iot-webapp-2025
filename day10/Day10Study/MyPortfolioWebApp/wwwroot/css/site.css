@@ -1439,4 +1439,22 @@ section,
     color: #34B5A5;
 }
 
-    
+
+.content-body {
+    word-break: break-word;
+    white-space: pre-wrap;
+    overflow-wrap: break-word;
+    line-height: 1.6;
+}
+
+
+.content-body {
+    background-color: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    padding: 1rem;
+    margin-top: 0.5rem;
+    line-height: 1.6;
+    white-space: pre-wrap;
+    word-break: break-word;
+}

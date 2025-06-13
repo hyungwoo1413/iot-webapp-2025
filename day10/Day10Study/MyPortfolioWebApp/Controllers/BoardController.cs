@@ -133,8 +133,8 @@ namespace MyPortfolioWebApp.Controllers
                     if (existingBoard == null)
                         return NotFound();
 
-                    existingBoard.Email = board.Email;
-                    existingBoard.Writer = board.Writer;
+                    //existingBoard.Email = board.Email;
+                    //existingBoard.Writer = board.Writer;
                     existingBoard.Title = board.Title;
                     existingBoard.Contents = board.Contents;
                     // PostDate, ReadCount는 원본 유지
